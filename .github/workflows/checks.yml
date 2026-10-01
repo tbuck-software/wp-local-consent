@@ -1,0 +1,33 @@
+name: Plugin checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  plugin:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        wordpress: ['6.7', '6.8.1']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: sqlite3, pdo_sqlite
+          tools: wp-cli:2.12.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Isolated WordPress
+        env:
+          WORDPRESS_VERSION: ${{ matrix.wordpress }}
+        run: make setup
+      - run: make test
+      - run: make package

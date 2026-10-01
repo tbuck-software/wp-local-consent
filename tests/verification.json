@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-01",
+  "php": "8.5.10",
+  "wordpress_html_tests": [
+    "6.7",
+    "6.8.1"
+  ],
+  "consent_state_tests": 5,
+  "site_tooling_tests": 5,
+  "browser": "T3 collaborative browser, desktop 1280x800 and mobile viewport 390x844",
+  "browser_scenarios": [
+    "first visit: no managed network requests",
+    "reject all and reload",
+    "allow map without tracking",
+    "allow all: external script before inline initializer",
+    "withdraw and reload",
+    "withdraw from another open tab",
+    "changed configuration invalidates old consent",
+    "storage writes fail: visible notice",
+    "withdrawal when storage cannot be written stays denied after reload",
+    "missing consent runtime: no managed network requests",
+    "save action appears only for a changed selection; services wait for save",
+    "compact dialog and map placeholder verified at 390px width",
+    "automatic design adopts existing body and heading fonts and readable colors",
+    "design JSON file imported and exported through WordPress settings",
+    "Böving design overrides verified on mobile; accessible fingerprint launcher opens settings",
+    "prepared design served with existing local Open Sans font; anonymous export refused",
+    "plugin settings tabs retain saved values and return to selected tab after saving; settings link in plugin list",
+    "custom design opens fields and copies actual website values; unsaved custom edits survive mode switches",
+    "Light, Soft and Dark presets verified; automatic values can be copied again",
+    "admin design sampling keeps managed resources inert even with previously granted visitor consent",
+    "invalid input in another tab opens its controls for correction",
+    "service descriptions and concise subtitle visible without details controls",
+    "live design preview rendered without managed resource requests",
+    "mobile sheet with fixed actions at 320x568, 390x844, 320x350 and 844x390",
+    "real Chromium touch input: short gesture resets, downward gesture rejects and persists",
+    "swipe withdrawal reloads with previously granted map blocked",
+    "scrolling, horizontal and cancelled gestures do not save consent",
+    "visible, clickable FAB in desktop modal; hidden in open mobile sheet; expanded state resets on close",
+    "confirmation animation after reject/save and after withdrawal reload",
+    "Desktop entry and exit shrink toward stationary FAB; mobile slides from bottom",
+    "Swipe exit preserves drag offset until close",
+    "iOS 27 Safari simulator: native sheet layout, rejection and restored FAB",
+    "Privacy-policy link moved below introduction; compact sticky footer at 320x350"
+  ],
+  "distribution": "local-consent-0.1.0.zip installed successfully in isolated WordPress",
+  "site_setup": [
+    "fresh SQLite development installation",
+    "manifest restoration into an empty directory",
+    "all 13 pinned external plugins restored, checksums verified on downloads",
+    "2 unavailable upstream plugins copied from checksum-verified snapshots",
+    "version check reports zero differences on original and restored local inventory"
+  ],
+  "limits": [
+    "Live WordPress version and active configuration are not yet synchronized with the local baseline",
+    "No claim of universal blocking for arbitrary plugins or dynamically injected resources",
+    "Mobile touch verification uses Chromium emulation and an iOS Safari simulator, not physical devices."
+  ],
+  "design_state_tests": 2,
+  "markup_checks": [
+    "seven labeled native color pickers paired with saved hex inputs",
+    "live banner preview container rendered on plugin design tab"
+  ],
+  "live_deployment": {
+    "site": "https://boeving.de",
+    "date": "2026-10-01",
+    "version": "0.1.4",
+    "record": "Deployment configuration is stored in the private website repository."
+  },
+  "package_tests": 3,
+  "development_setup": [
+    "standalone SQLite WordPress via make setup",
+    "idempotent setup preserves existing development installation",
+    "make dev serves the seeded page on port 8091",
+    "make test passes JavaScript, WordPress HTML/design and deterministic package checks"
+  ]
+}
