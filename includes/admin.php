@@ -52,9 +52,15 @@ function render_design_fields($keys) {
         <?php foreach ($keys as $key) : $field = $fields[$key]; ?>
         <label for="lc-design-<?php echo esc_attr($key); ?>"><?php echo esc_html($field['label']); ?></label>
         <div<?php echo $field['type'] === 'color' ? ' class="lc-admin-color"' : ''; ?>>
+            <?php if ($field['type'] === 'position') : ?>
+            <select id="lc-design-<?php echo esc_attr($key); ?>" name="<?php echo esc_attr(OPTION); ?>[design][tokens][<?php echo esc_attr($key); ?>]">
+                <?php foreach ($field['options'] as $value => $label) : ?><option value="<?php echo esc_attr($value); ?>" <?php selected(launcher_position(settings()['design']), $value); ?>><?php echo esc_html($label); ?></option><?php endforeach; ?>
+            </select>
+            <?php else : ?>
             <?php if ($field['type'] === 'color') : ?><input type="color" data-lc-color="<?php echo esc_attr($key); ?>" aria-label="<?php echo esc_attr($field['label'] . ': Farbe wählen'); ?>" value="<?php echo esc_attr($tokens[$key] ?? '#000000'); ?>"><?php endif; ?>
             <input id="lc-design-<?php echo esc_attr($key); ?>" data-lc-token="<?php echo esc_attr($key); ?>" data-lc-kind="<?php echo esc_attr($field['type']); ?>" type="<?php echo $field['type'] === 'number' ? 'number' : 'text'; ?>" name="<?php echo esc_attr(OPTION); ?>[design][tokens][<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr($tokens[$key] ?? ''); ?>"
-            <?php if ($field['type'] === 'number') : ?>min="<?php echo (int) $field['min']; ?>" max="<?php echo (int) $field['max']; ?>" step="0.1"<?php else : ?>class="regular-text" placeholder="<?php echo $field['type'] === 'color' ? '#003154' : 'Automatisch'; ?>"<?php endif; ?>><?php echo $field['type'] === 'number' ? ' px' : ''; ?></div>
+            <?php if ($field['type'] === 'number') : ?>min="<?php echo (int) $field['min']; ?>" max="<?php echo (int) $field['max']; ?>" step="0.1"<?php else : ?>class="regular-text" placeholder="<?php echo $field['type'] === 'color' ? '#003154' : 'Automatisch'; ?>"<?php endif; ?>><?php echo $field['type'] === 'number' ? ' px' : ''; ?>
+            <?php endif; ?></div>
         <?php endforeach; ?>
     </div>
     <?php
@@ -109,6 +115,7 @@ function admin_page() {
                         <option value="custom" <?php selected($settings['design']['mode'], 'custom'); ?>>Eigenes Design</option>
                     </select>
                 </div>
+                <?php render_design_fields(array('launcherPosition')); ?>
                 <div data-lc-custom-design <?php echo $settings['design']['mode'] === 'auto' ? 'hidden' : ''; ?>>
                 <div class="lc-admin-fields"><label for="lc-design-preset">Vorlage</label><select id="lc-design-preset"><option value="">Auswählen</option><option value="website">Automatisches Design</option><?php foreach (design_presets() as $id => $preset) : ?><option value="<?php echo esc_attr($id); ?>"><?php echo esc_html($preset['label']); ?></option><?php endforeach; ?></select></div>
                 <p id="lc-design-copy-status" class="description" role="status" hidden></p>

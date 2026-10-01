@@ -16,8 +16,14 @@ function design_fields() {
         'focus' => array('label' => 'Fokus', 'type' => 'color'),
         'radius' => array('label' => 'Dialog', 'type' => 'number', 'min' => 0, 'max' => 32),
         'buttonRadius' => array('label' => 'Buttons', 'type' => 'number', 'min' => 0, 'max' => 32),
+        'launcherPosition' => array('label' => 'Position', 'type' => 'position', 'options' => array('bottom-left' => 'Unten links', 'bottom-right' => 'Unten rechts', 'top-left' => 'Oben links', 'top-right' => 'Oben rechts')),
         'launcherRadius' => array('label' => 'Icon', 'type' => 'number', 'min' => 0, 'max' => 24),
     );
+}
+
+function launcher_position($design) {
+    $position = $design['tokens']['launcherPosition'] ?? 'bottom-left';
+    return is_string($position) && isset(design_fields()['launcherPosition']['options'][$position]) ? $position : 'bottom-left';
 }
 
 function default_design() {
@@ -51,7 +57,9 @@ function validate_design($input) {
             return new \WP_Error('design', 'Unbekannter Designwert: ' . $key);
         }
         $field = $fields[$key];
-        if ($field['type'] === 'number') {
+        if ($field['type'] === 'position') {
+            $valid = is_string($value) && isset($field['options'][$value]);
+        } elseif ($field['type'] === 'number') {
             $valid = (is_int($value) || is_float($value)) && is_finite((float) $value)
                 && $value >= $field['min'] && $value <= $field['max'];
         } elseif ($field['type'] === 'color') {
@@ -84,6 +92,7 @@ function design_css($design) {
     if (is_wp_error($design)) return '';
     $css = '';
     foreach ($design['tokens'] as $key => $value) {
+        if (design_fields()[$key]['type'] === 'position') continue;
         $property = strtolower(preg_replace('/[A-Z]/', '-$0', $key));
         $unit = design_fields()[$key]['type'] === 'number' ? 'px' : '';
         $css .= '--lc-' . $property . ':' . $value . $unit . ';';

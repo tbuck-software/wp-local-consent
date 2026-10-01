@@ -33,7 +33,7 @@ function render_ui() {
     $config = consent_config();
     ?>
     <script type="application/json" id="local-consent-config"><?php echo wp_json_encode($config, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?></script>
-    <div id="lc-root" class="lc-root">
+    <div id="lc-root" class="lc-root" data-lc-position="<?php echo esc_attr(launcher_position(settings()['design'])); ?>">
         <button type="button" class="lc-reopen" data-lc-open aria-controls="lc-dialog" aria-expanded="false" title="<?php echo esc_attr(text('settings')); ?>" hidden><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M3 14v-2a9 9 0 0 1 18 0v2M6 12a6 6 0 0 1 12 0c0 2-.2 4-.8 6M9 12a3 3 0 0 1 6 0c0 3-.5 6-1.5 9M12 12c0 3-.5 6-2 9M6 12c0 3-.5 5-1.5 7M9 12c0 2-.3 4-.8 5"/></svg><span class="lc-sr-only"><?php echo esc_html(text('settings')); ?></span></button>
         <dialog id="lc-dialog" class="lc-dialog" aria-labelledby="lc-title" aria-describedby="lc-intro">
             <form method="dialog" class="lc-panel">

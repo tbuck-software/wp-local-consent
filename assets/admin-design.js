@@ -4,6 +4,7 @@
     const configElement = document.getElementById('local-consent-admin-config');
     const mode = document.getElementById('lc-design-mode');
     const fields = document.querySelector('[data-lc-custom-design]');
+    const position = document.getElementById('lc-design-launcherPosition');
     const preset = document.getElementById('lc-design-preset');
     const status = document.getElementById('lc-design-copy-status');
     if (!configElement || !mode || !fields || !preset || !status) return;
@@ -101,7 +102,7 @@
         previewDoc = frame.contentDocument;
         autoSheet = previewDoc.getElementById('local-consent-auto-design')?.sheet;
         const css = previewDoc.createElement('style');
-        css.textContent = 'html,body{margin:0!important;padding:0!important;min-height:0!important;background:transparent!important}body{padding:16px!important}body>:not(#lc-root){display:none!important}.lc-root .lc-dialog{display:block;position:relative;inset:auto;margin:0;width:100%;max-width:none;max-height:none;box-shadow:none;z-index:auto}.lc-root .lc-panel{box-shadow:none}.lc-root .lc-reopen{position:relative;inset:auto;margin-top:14px;opacity:1!important;pointer-events:auto!important;z-index:auto}';
+        css.textContent = 'html,body{margin:0!important;padding:0!important;min-height:0!important;background:transparent!important}body{padding:16px!important}body>:not(#lc-root){display:none!important}.lc-root .lc-dialog{display:block;position:relative!important;inset:auto!important;margin:0;width:100%!important;max-width:none!important;max-height:none!important;box-shadow:none;z-index:auto}.lc-root .lc-panel{box-shadow:none}.lc-root .lc-reopen{position:relative!important;inset:auto!important;margin:14px 0 0;opacity:1!important;pointer-events:auto!important;z-index:auto}.lc-root[data-lc-position$=right] .lc-reopen{margin-left:auto}.lc-root[data-lc-position^=top] .lc-reopen{margin-top:0;margin-bottom:14px}';
         previewDoc.head.append(css);
         const root = previewDoc.getElementById('lc-root');
         root.querySelector('dialog').setAttribute('open', '');
@@ -118,6 +119,10 @@
     function updatePreview() {
         if (!previewDoc) return;
         const root = previewDoc.getElementById('lc-root');
+        root.dataset.lcPosition = position.value;
+        const launcher = root.querySelector('.lc-reopen');
+        if (position.value.startsWith('top')) root.prepend(launcher);
+        else root.append(launcher);
         if (autoSheet) autoSheet.disabled = mode.value === 'custom';
         for (const input of inputs) {
             const key = input.dataset.lcToken;
@@ -150,6 +155,7 @@
         });
     }
     inputs.forEach(input => input.addEventListener('input', updatePreview));
+    position.addEventListener('change', updatePreview);
     document.addEventListener('local-consent:admin-tab', event => {
         if (event.detail === 'design') startPreview();
     });

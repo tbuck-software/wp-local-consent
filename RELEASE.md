@@ -1,11 +1,9 @@
-Lokaler Consent-Manager für WordPress, kostenlos und unter GPL-2.0-or-later.
+Klicks und Tipps außerhalb des Consent-Fensters lehnen jetzt alle Dienste ab. Bereits erlaubte Dienste werden widerrufen; eingebettete Inhalte werden gesperrt und die Seite lädt neu, um laufende Skripte zu beenden.
 
-- Google Maps, Google Analytics / Tag Manager, YouTube und Vimeo vor Einwilligung sperren.
-- Einzelne Dienste freigeben, ablehnen und Einwilligung widerrufen.
-- Deutsche und englische Oberfläche, anpassbares Design mit Live-Vorschau und JSON-Import.
-- Fingerabdruck-Button, animiertes Desktop-Fenster und mobiles Bottom Sheet mit festen Aktionen.
-- Keine Accounts, externen Consent-Server oder Zugriffslimits.
+FAB und Desktop-Box lassen sich unter **Design → Position** in jede Ecke setzen, auch mit automatischem Design. Die Auswahl ist in Vorschau und JSON-Import enthalten. Auf Mobile bleibt die Box ein Bottom Sheet.
 
-Das ZIP unter **Assets** in WordPress über **Plugins → Plugin hinzufügen → Plugin hochladen** installieren. Den bisherigen Consent-Manager deaktivieren und Seiten-Caches erneuern.
+Der FAB behält seine Funktion. Bewegungen aus dem Fenster nach draußen zählen nicht als Außenklick. Schließanimationen und reduzierte Bewegung bleiben berücksichtigt.
 
-Benötigt WordPress ab 6.7 und PHP ab 7.4. Unterstützte Integrationen und technische Grenzen stehen in der README. Google Consent Mode und IAB TCF sind nicht enthalten.
+Das ZIP unter **Assets** in WordPress über **Plugins → Plugin hinzufügen → Plugin hochladen** installieren und das bestehende Local Consent ersetzen. Einstellungen bleiben erhalten. Anschließend Seiten-Caches erneuern.
+
+Benötigt WordPress ab 6.7 und PHP ab 7.4.

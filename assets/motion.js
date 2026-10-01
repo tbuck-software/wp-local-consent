@@ -37,7 +37,11 @@
             animation = panel.animate([current, collapsed()], {
                 duration: 200, easing: 'cubic-bezier(.4,0,.6,1)', fill: 'forwards',
             });
-            return animation.finished.catch(() => {});
+            // A throttled rendering clock must not postpone consent withdrawal.
+            return new Promise(resolve => {
+                const timer = setTimeout(resolve, 250);
+                animation.finished.catch(() => {}).then(() => { clearTimeout(timer); resolve(); });
+            });
         }
 
         dialog.addEventListener('close', () => {

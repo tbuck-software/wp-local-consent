@@ -19,6 +19,7 @@
             reset();
             const inContent = !!event.target.closest('.lc-content');
             if (!mobile.matches || !dialog.open || dialog.classList.contains('lc-exiting') || !point
+                || !event.target.closest('.lc-panel')
                 || event.target.closest('button,a,input,label,select,textarea')
                 || (inContent && content.scrollTop > 0) || window.getSelection()?.toString()) return;
             gesture = { x: point.clientX, y: point.clientY, distance: 0, dragging: false, inContent };

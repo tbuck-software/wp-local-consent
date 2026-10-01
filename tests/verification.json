@@ -41,7 +41,13 @@
     "Desktop entry and exit shrink toward stationary FAB; mobile slides from bottom",
     "Swipe exit preserves drag offset until close",
     "iOS 27 Safari simulator: native sheet layout, rejection and restored FAB",
-    "Privacy-policy link moved below introduction; compact sticky footer at 320x350"
+    "Privacy-policy link moved below introduction; compact sticky footer at 320x350",
+    "Desktop backdrop click persists rejection and closes with animation",
+    "Inside clicks, cancelled pointers and drags crossing the panel boundary do not reject",
+    "FAB closes without changing a saved grant",
+    "Backdrop revocation removes frames immediately and reloads with fixture scripts absent",
+    "All four desktop corner layouts and top-corner mobile bottom-sheet override",
+    "Admin position control works with automatic and custom design; protected preview remains inert"
   ],
   "distribution": "local-consent-0.1.0.zip installed successfully in isolated WordPress",
   "site_setup": [
@@ -64,7 +70,7 @@
   "live_deployment": {
     "site": "https://boeving.de",
     "date": "2026-10-01",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "record": "Deployment configuration is stored in the private website repository."
   },
   "package_tests": 3,
@@ -73,5 +79,6 @@
     "idempotent setup preserves existing development installation",
     "make dev serves the seeded page on port 8091",
     "make test passes JavaScript, WordPress HTML/design and deterministic package checks"
-  ]
+  ],
+  "motion_state_tests": 1
 }

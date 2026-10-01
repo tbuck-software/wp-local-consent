@@ -272,6 +272,24 @@
             else open();
         }
     });
+    // Only a complete tap on the backdrop rejects. Drags from the sheet and
+    // clicks on the FAB keep their own behavior.
+    let backdropPointer = null;
+    let backdropClick = false;
+    dialog.addEventListener('pointerdown', event => {
+        backdropPointer = event.isPrimary && event.button === 0 && event.target === dialog ? event.pointerId : null;
+        backdropClick = false;
+    });
+    dialog.addEventListener('pointerup', event => {
+        backdropClick = backdropPointer === event.pointerId && event.target === dialog;
+        backdropPointer = null;
+    });
+    dialog.addEventListener('pointercancel', () => { backdropPointer = null; backdropClick = false; });
+    dialog.addEventListener('click', event => {
+        const reject = backdropClick && event.target === dialog;
+        backdropClick = false;
+        if (reject) { event.preventDefault(); commit(empty()); }
+    });
     root.querySelector('[data-lc-close]').addEventListener('click', close);
     dialog.addEventListener('cancel', event => { event.preventDefault(); close(); });
     root.querySelector('.lc-services').addEventListener('change', () => {

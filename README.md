@@ -18,7 +18,7 @@ Die HTML-Sperre läuft vor der Auslieferung. Alle Besucher erhalten dieselbe ges
 
 Das Plugin-ZIP gibt es unter [GitHub Releases](https://github.com/tbuck-software/wp-local-consent/releases). In WordPress hochladen und aktivieren, dann unter **Plugins → Local Consent** konfigurieren. Das Paket enthält nur Plugin-Code, Assets, Lizenz und WordPress-Readme. Der WordPress-Verzeichnisname bleibt `local-consent`.
 
-Auf Desktop öffnet das Banner über dem Fingerabdruck-Button und schrumpft beim Schließen zu ihm. Der FAB bleibt dabei sichtbar und klickbar. Auf Mobile fährt das Bottom Sheet von unten ein und hinaus; der FAB ist währenddessen verborgen. Die Aktionen bleiben beim Scrollen sichtbar. Herunterziehen lehnt alle Dienste ab. Reduzierte Bewegung deaktiviert die Animationen.
+Auf Desktop öffnet das Banner über dem Fingerabdruck-Button und schrumpft beim Schließen zu ihm. Der FAB bleibt dabei sichtbar und klickbar. Auf Mobile fährt das Bottom Sheet von unten ein und hinaus; der FAB ist währenddessen verborgen. Die Aktionen bleiben beim Scrollen sichtbar. Herunterziehen und ein Klick oder Tippen außerhalb lehnen alle Dienste ab, auch bereits erlaubte. Der FAB und das Schließen-Symbol schließen die Auswahl ohne Änderung. Reduzierte Bewegung deaktiviert die Animationen.
 
 ## Entwicklung und Tests
 
@@ -39,7 +39,7 @@ make dev
 | `make seed` | Lokale Testseite wiederherstellen |
 | `make test` | Syntax, JavaScript, PHP-Integration und Paket prüfen |
 | `make test-js` | JavaScript-Tests ohne WordPress |
-| `make package` | `dist/local-consent-0.1.4.zip` bauen |
+| `make package` | `dist/local-consent-0.1.5.zip` bauen |
 | `make help` | Befehle und Variablen anzeigen |
 
 Die Testseite verwendet lokale Platzhalter und ein Testskript. Sie prüft Freigabe und Lade-Reihenfolge ohne echte Tracking-Aufrufe. Die PHP-Tests benötigen ein eingerichtetes WordPress. Eine andere isolierte Testinstallation kann mit `make test LOCAL_CONSENT_WP=/pfad/wordpress` verwendet werden. Der Setup-Befehl arbeitet immer nur in der eigenen `.local/wordpress`-Installation.
@@ -56,13 +56,15 @@ Vor einem neuen Release die Version im Plugin-Header, `LocalConsent\VERSION` und
 make test
 make package
 git push origin main
-git tag v0.1.5
-git push origin v0.1.5
+git tag v0.1.6
+git push origin v0.1.6
 ```
 
-`v0.1.5` ist das Beispiel für den nächsten Release. Stimmen Tag und Paketversion nicht überein, bricht der Paketbau ab. Releases aktualisieren keine WordPress-Installation automatisch; Updates erfolgen über das ZIP. `Update URI: false` verhindert Updates durch ein fremdes Plugin mit demselben Verzeichnisnamen.
+`v0.1.6` ist das Beispiel für den nächsten Release. Stimmen Tag und Paketversion nicht überein, bricht der Paketbau ab. Releases aktualisieren keine WordPress-Installation automatisch; Updates erfolgen über das ZIP. `Update URI: false` verhindert Updates durch ein fremdes Plugin mit demselben Verzeichnisnamen.
 
 ## Design
+
+Die Position von FAB und Desktop-Box lässt sich unter **Design → Position** für jede Ecke wählen, auch bei automatischem Design. Auf Mobile bleibt die Box ein Bottom Sheet. JSON-Imports können `launcherPosition` mit `bottom-left`, `bottom-right`, `top-left` oder `top-right` enthalten.
 
 Unter **Plugins → Local Consent → Design** übernimmt der Modus „Automatisch“ die vorhandene Fließtext- und Überschriftenschrift, Hintergrund- und Textfarben sowie geeignete Button- oder Linkfarben. Rundungen stammen von vorhandenen Buttons. Fehlen passende Elemente, gelten neutrale Standardwerte. Automatisch erkannte Textfarben werden auf ausreichenden Kontrast geprüft. Die Erkennung ist eine Annäherung, keine vollständige Auswertung aller Theme-Regeln.
 

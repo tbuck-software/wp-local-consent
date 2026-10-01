@@ -26,6 +26,12 @@ check_design(is_wp_error(LocalConsent\parse_design_json(str_repeat(' ', 16385)))
 foreach (LocalConsent\design_presets() as $preset) {
     check_design(!is_wp_error(LocalConsent\validate_design(array('version' => 1, 'mode' => 'custom', 'tokens' => $preset['tokens']))), 'preset can be imported and exported');
 }
+foreach (array('bottom-left', 'bottom-right', 'top-left', 'top-right') as $position) {
+    $positioned = LocalConsent\parse_design_json(wp_json_encode(array('version' => 1, 'mode' => 'auto', 'tokens' => array('launcherPosition' => $position))));
+    check_design(!is_wp_error($positioned) && LocalConsent\launcher_position($positioned) === $position, 'launcher position imports in automatic mode');
+}
+check_design(is_wp_error(LocalConsent\parse_design_json('{"version":1,"mode":"auto","tokens":{"launcherPosition":"center; background:red"}}')), 'invalid launcher position rejected');
+check_design(LocalConsent\launcher_position(LocalConsent\default_design()) === 'bottom-left', 'existing designs retain their launcher position');
 $previous_user = get_current_user_id();
 $previous_get = $_GET;
 try {
