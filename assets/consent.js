@@ -290,6 +290,31 @@
         backdropClick = false;
         if (reject) { event.preventDefault(); commit(empty()); }
     });
+    // The backdrop locks page scrolling, so also dismiss on scroll intent.
+    // Scrolling the service list must keep the dialog and consent unchanged.
+    window.addEventListener('scroll', event => {
+        if (event.target === document) close();
+    }, { passive: true });
+    dialog.addEventListener('wheel', event => {
+        if (event.target === dialog && !event.ctrlKey && (event.deltaX || event.deltaY)) close();
+    }, { passive: true });
+    let backdropTouch;
+    dialog.addEventListener('touchstart', event => {
+        backdropTouch = event.target === dialog && event.touches.length === 1
+            ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
+    }, { passive: true });
+    dialog.addEventListener('touchmove', event => {
+        if (!backdropTouch || event.touches.length !== 1) { backdropTouch = null; return; }
+        const point = event.touches[0];
+        if (Math.hypot(point.clientX - backdropTouch.x, point.clientY - backdropTouch.y) >= 8) {
+            backdropTouch = null;
+            backdropPointer = null;
+            backdropClick = false;
+            close();
+        }
+    }, { passive: true });
+    dialog.addEventListener('touchend', () => { backdropTouch = null; });
+    dialog.addEventListener('touchcancel', () => { backdropTouch = null; });
     root.querySelector('[data-lc-close]').addEventListener('click', close);
     dialog.addEventListener('cancel', event => { event.preventDefault(); close(); });
     root.querySelector('.lc-services').addEventListener('change', () => {

@@ -4,7 +4,7 @@ Tags: consent, privacy, google maps, local
 Requires at least: 6.7
 Tested up to: 6.8.1
 Requires PHP: 7.4
-Stable tag: 0.1.5
+Stable tag: 0.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,10 @@ Use the local_consent_services PHP filter to register a service with a label, de
 See README.md in the source repository for examples and tests.
 
 == Changelog ==
+
+= 0.1.6 =
+* Scrolling the page or using the mouse wheel or a swipe outside the dialog closes it without changing saved consent.
+* The service list remains scrollable while the dialog is open.
 
 = 0.1.5 =
 * Four configurable FAB and desktop-dialog corners, including with automatic design.
